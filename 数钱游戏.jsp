@@ -201,16 +201,17 @@
 </div>
 </body>
 <script>
+var winWidth=$(window).width(),winHeight=$(window).height();
 //设置URL
 	//初始化图片位置
 	function initIMG(){
-		$('#money').width($(window).width()*0.5);
+		$('#money').width(winWidth*0.5);
 		$('.images').width($('#money').width()).css({marginLeft:-$('.images').width()/2});
 	};
 	initIMG();
-$('.menu1').attr('href','${pathWeb}/countmoney/redirect.do?t='+new Date().getTime());
-//设置登录框样式
-$('.loginbox').css('marginTop',($(window).height()-265)/2);	
+	$('.menu1').attr('href','${pathWeb}/countmoney/redirect.do?t='+new Date().getTime());
+	//设置登录框样式
+	$('.loginbox').css('marginTop',(winHeight-265)/2);	
 
 
 
@@ -235,7 +236,6 @@ $(function(){
 	var num=1,
 		s='<s></s>',
 		r=[1,2,3,4,5,6],
-		pos=[0,40,80,120,160,200,240,-10],
 		posClass=['shun','ni','yanshi1','yanshi2','yanshi3'];
 		
 		
@@ -246,9 +246,9 @@ $(function(){
 			$('.animat').append(s);
 		}		
 		for (var j=0,len=$('.animat s').length; j<len; j++){		
-			var sIndex=Math.floor(Math.random()*pos.length),
+			var sIndex=Math.floor(Math.random()*winWidth),
 				sClass=Math.floor(Math.random()*posClass.length);			
-			$('.animat s').eq(j).css('left',pos[sIndex]).removeClass().addClass(posClass[sClass]);
+			$('.animat s').eq(j).css('left',sIndex).removeClass().addClass(posClass[sClass]);
 		}		
 	}
 	
@@ -410,7 +410,7 @@ $(function(){
 	
 
 	//手势动作开始
-	var target=$(window).height()+50,$imgbox=$('.images'),isfirst=true;
+	var target=winHeight+50,$imgbox=$('.images'),isfirst=true;
 	function slider(){
 		if(allTime==0) return;
 		if((startY-endY)>=70){
@@ -423,7 +423,6 @@ $(function(){
 				$('.money').eq(1).attr('src','${configjscss }/images/newimages/shuqian/10.jpg');
 				isfirst=false;
 			}
-// 			slider.timeout=setTimeout(doMove,300);				
 		}
 	}
 	
@@ -431,21 +430,17 @@ $(function(){
 	function doMove(){	
 		//进入第二页
 		if(isplay) { 
-// 			alert()
 			$('.main').append(page2);
 			$('.play').show();
-// 			$('.footer').show();
 			$('.init').remove();
 			$('#money').addClass('active');
 			downMoney();
-// 			speed=200;  //图片滑动的速度
 			allTime=parseInt($('.second').text());
 			$('.money').attr('m',10);  //第一张钱是10元
 			initIMG();
 			reDownMoney();
 			isplay=false;
 		}
-// 		$('.images img').css('bottom',0);
 		//开始倒计时 去掉箭头
 		if(iindex==1){
 			clearTimeout(doMove.timer);
